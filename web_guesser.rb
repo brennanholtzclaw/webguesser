@@ -6,6 +6,7 @@ NUMBER = 10
 SecretMessage = "The Secret Number is #{NUMBER}"
 high_message = "Too High!"
 low_message = "Too Low!"
+bgcolor = "FFFFFF"
 
 def check_guess(guess)
   if (guess - 5) > NUMBER
@@ -21,16 +22,17 @@ def check_guess(guess)
   end
 end
 
-# :secret_message => secret_message,
-# :high_message => high_message,
-# :low_message => low_message
+  def color_check(letter)
+    bg = {"T" => "F5A9A9", "W" => "FF0000", "G" => "01DF01"}
+    bg[letter]
+  end
 
 get '/' do
 
   guess = params["guess"]
   message = check_guess(guess.to_i)
-  erb :index, :locals => {:number => NUMBER,
-                          :message => message}
-
+  bgcolor = color_check(message[0])
+  erb :index, :locals => {:message => message,
+                          :bg_color => bgcolor}
 
 end
